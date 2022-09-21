@@ -1,0 +1,37 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: postgres
+  namespace: voting-application
+  labels:
+    app: pg-db
+spec:
+  template:
+    metadata:
+      name: postgres
+      labels:
+        app: pg-db
+    spec:
+      containers:
+        - name: postgres
+          image: postgres
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              value: "postgres"
+            - name: POSTGRES_PASSWORD
+              value: "postgres"
+            - name: POSTGRES_HOST_AUTH_METHOD
+              value: trust          
+          volumeMounts:
+            - mountPath: /pgvolume/data
+              name: pg-volume
+      volumes:  
+        - name: pg-volume
+          persistentVolumeClaim:
+            claimName: voting-app-persistentvolumeclaim
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pg-db

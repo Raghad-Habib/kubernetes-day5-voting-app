@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: voting-app-persistentvolume
+  namespace: voting-application
+spec:
+  hostPath:
+    path: /votingapp/persistent-volume
+  capacity:
+    storage: 3Gi
+  accessModes:
+    - ReadWriteOnce
+  storageClassName: local-path
+
+  

@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: voting-app
+  namespace: voting-application
+  labels:
+    app: voting-app
+spec:
+  template:
+    metadata:
+      name: voting-app
+      labels:
+        app: voting-app
+    spec:
+      containers:
+        - name: voting-container
+          image: noura93/vote:latest
+          ports:
+            - containerPort: 80
+  replicas: 1
+  selector:
+    matchLabels:
+      app: voting-app
+
+      
